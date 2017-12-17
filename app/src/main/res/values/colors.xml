@@ -3,4 +3,22 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="white">#FFFFFF</color>
+    <color name="yellowMusturd">#EFC501</color>
+    <color name="grayBtn">#BAAE9E</color>
+    <color name="menuBtn">#ED995D</color>
+    <color name="textColor">#F1E5D5</color>
+    <color name="background">#BAAE9E</color>
+    <color name="squareColor">#CCBFB6</color>
+    <color name="square2">#F0E3DA</color>
+    <color name="square4">#F0DFCB</color>
+    <color name="square8">#F2B177</color>
+    <color name="square16">#EF8C55</color>
+    <color name="square32">#F77B61</color>
+    <color name="square64">#E95A3A</color>
+    <color name="square128">#F3D96B</color>
+    <color name="square256">#F1D04B</color>
+    <color name="square512">#E3C227</color>
+    <color name="square1024">#E3BA14</color>
+    <color name="square2048">#ECC400</color>
 </resources>

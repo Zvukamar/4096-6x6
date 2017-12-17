@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">4096 -6x6 - christmas X edition</string>
+    <string name="app_name">My Application</string>
+    <string name="_2048">2048</string>
+    <string name="best_text">Best</string>
+    <string name="leaderboard">Leaderboard</string>
+    <string name="_0">0</string>
+    <string name="option">Option</string>
+    <string name="score">Score</string>
+    <string name="join_the_numbers_and_get_to_the_2048_tile">Join the numbers and get to the 2048 tile!</string>
+    <string name="restart">Restart</string>
+    <string name="undo">UNDO</string>
 </resources>
