@@ -4,12 +4,11 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFF</color>
-    <color name="yellowMusturd">#EFC501</color>
+    <color name="blue">#1b75a9</color>
     <color name="grayBtn">#BAAE9E</color>
     <color name="menuBtn">#ED995D</color>
     <color name="textColor">#F1E5D5</color>
-    <color name="background">#BAAE9E</color>
-    <color name="squareColor">#CCBFB6</color>
+    <color name="squareColor">#53a5d2</color>
     <color name="square2">#F0E3DA</color>
     <color name="square4">#F0DFCB</color>
     <color name="square8">#F2B177</color>

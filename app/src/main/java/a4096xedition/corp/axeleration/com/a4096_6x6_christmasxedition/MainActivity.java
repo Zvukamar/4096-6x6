@@ -17,27 +17,45 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+
 import java.util.Random;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener { // TODO: text size after 4 digit number, undo score fix, code optimization, fix colors
 
-    public static final int ROWS = 4;
-    public static final int COLS = 4;
+    public static final int ROWS = 5;
+    public static final int COLS = 5;
     private TextView[][] viewArr;
     private ViewGroup table;
     private TextView scoreView;
     private int score, lastUpdatedScore;
     private String[][] undoMatrix;
     private MediaPlayer moveSound, matchSound;
+    private InterstitialAd mInterstitialAd;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Load an ad into the AdMob banner view.
+        AdView adView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .setRequestAgent("android_studio:ad_template").build();
+        adView.loadAd(adRequest);
+
         matchSound = MediaPlayer.create(this, R.raw.match);
         moveSound = MediaPlayer.create(this, R.raw.move);
 //        moveSound.start();
+        mInterstitialAd = newInterstitialAd();
+        loadInterstitial();
+
+
         SharedPreferences prefs = getSharedPreferences("Score", MODE_PRIVATE);
         int high_score = prefs.getInt("high_score", 0);
         TextView bestScore = findViewById(R.id.bestScoreTxt);
@@ -82,6 +100,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    private void loadInterstitial() {
+        // Disable the next level button and load the ad.
+        AdRequest adRequest = new AdRequest.Builder()
+                .setRequestAgent("android_studio:ad_template").build();
+        mInterstitialAd.loadAd(adRequest);
+    }
+
+    private InterstitialAd newInterstitialAd() {
+        InterstitialAd interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
+        interstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+
+            }
+
+            @Override
+            public void onAdClosed() {
+
+            }
+        });
+        return interstitialAd;
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -107,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void restartGame() {
+        loadInterstitial();
         TextView best = findViewById(R.id.bestScoreTxt);
         if (Integer.parseInt(best.getText().toString()) < score) {
             best.setText(String.valueOf(score));
@@ -125,165 +172,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void swipeDown() {
         new TaskDown().execute();
-//        String temp[][] = getNewStringArr(viewArr);
-//        for (int i = 0; i < ROWS; i++) {
-//            for (int j = ROWS - 1; j >= 0; j--) {
-//                if (isExists(j, i)) {
-//                    for (int k = j + 1; k < ROWS; k++) {
-//                        if (!isExists(k, i)) {
-////                            moveSound.start();
-//                            viewArr[k][i].setText(viewArr[k - 1][i].getText().toString());
-//                            viewArr[k - 1][i].setText("");
-//                            setColor(k, i);
-//                            setColor(k - 1, i);
-//                            break;
-//                        } else if (viewArr[k][i].getText().toString().equals(viewArr[k - 1][i].getText().toString())) {
-////                            matchSound.start();
-//                            lastUpdatedScore = score;
-//                            int number = Integer.parseInt(viewArr[k - 1][i].getText().toString()) * 2;
-//                            score += number;
-//                            scoreView.setText(String.valueOf(score));
-//                            viewArr[k][i].setText(String.valueOf(number));
-//                            viewArr[k - 1][i].setText("");
-//                            setColor(k, i);
-//                            setColor(k - 1, i);
-//                            break;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        if (!isEqual(temp)) {
-//            addRandomSquare();
-//            undoMatrix = temp;
-//        } else if (isTableFull()) {
-//            if (gameOver()) {
-//                Toast.makeText(MainActivity.this, "Game Over", Toast.LENGTH_SHORT).show();
-//            }
-//        }
     }
 
     private void swipeUp() {
         new TaskUp().execute();
-//        String temp[][] = getNewStringArr(viewArr);
-//        for (int i = 0; i < ROWS; i++) {
-//            for (int j = 0; j < ROWS; j++) {
-//                if (isExists(j, i)) {
-//                    for (int k = j - 1; k >= 0; k--) {
-//                        if (!isExists(k, i)) {
-////                            moveSound.start();
-//                            viewArr[k][i].setText(viewArr[k + 1][i].getText().toString());
-//                            viewArr[k + 1][i].setText("");
-//                            setColor(k, i);
-//                            setColor(k + 1, i);
-//                            break;
-//                        } else if (viewArr[k][i].getText().toString().equals(viewArr[k + 1][i].getText().toString())) {
-////                            matchSound.start();
-//                            lastUpdatedScore = score;
-//                            int number = Integer.parseInt(viewArr[k + 1][i].getText().toString()) * 2;
-//                            score += number;
-//                            scoreView.setText(String.valueOf(score));
-//                            viewArr[k][i].setText(String.valueOf(number));
-//                            viewArr[k + 1][i].setText("");
-//                            setColor(k, i);
-//                            setColor(k + 1, i);
-//                            break;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        if (!isEqual(temp)) {
-//            addRandomSquare();
-//            undoMatrix = temp;
-//        } else if (isTableFull()) {
-//            if (gameOver()) {
-//                Toast.makeText(MainActivity.this, "Game Over", Toast.LENGTH_SHORT).show();
-//            }
-//        }
     }
 
     private void swipeLeft() {
         new TaskLeft().execute();
-//        String temp[][] = getNewStringArr(viewArr);
-//        for (int i = 0; i < COLS; i++) {
-//            for (int j = 0; j < COLS; j++) {
-//                if (isExists(i, j)) {
-//                    for (int k = j - 1; k >= 0; k--) {
-//                        if (!isExists(i, k)) {
-////                            moveSound.start();
-//                            viewArr[i][k].setText(viewArr[i][k + 1].getText().toString());
-//                            viewArr[i][k + 1].setText("");
-//                            setColor(i, k);
-//                            setColor(i, k + 1);
-//
-//                        } else if (viewArr[i][k].getText().toString().equals(viewArr[i][k + 1].getText().toString())) {
-////                            matchSound.start();
-//                            lastUpdatedScore = score;
-//                            int number = Integer.parseInt(viewArr[i][k + 1].getText().toString()) * 2;
-//                            score += number;
-//                            scoreView.setText(String.valueOf(score));
-//                            viewArr[i][k].setText(String.valueOf(number));
-//                            viewArr[i][k + 1].setText("");
-//                            setColor(i, k);
-//                            setColor(i, k + 1);
-//                            break;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        if (!isEqual(temp)) {
-//            addRandomSquare();
-//            undoMatrix = temp;
-//        } else if (isTableFull()) {
-//            if (gameOver()) {
-//                Toast.makeText(MainActivity.this, "Game Over", Toast.LENGTH_SHORT).show();
-//            }
-//        }
     }
 
     private void swipeRight() {
-//        final String[][] temp = getNewStringArr(viewArr);
         new TaskRight().execute();
-
-
-//        for(int i = 0; i < COLS; i++) {
-//             for(int j = COLS - 1; j >= 0; j--) {
-//                if(isExists(i,j)) {
-//                    for(int k = j + 1; k < COLS; k++){
-//                        if(!isExists(i,k)) {
-////                            moveSound.start();
-//                            viewArr[i][k].startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_anim));
-//                            viewArr[i][k].setText(viewArr[i][k - 1].getText().toString());
-//                            viewArr[i][k - 1].setText("");
-//                            setColor(i, k);
-//                            setColor(i, k - 1);
-//
-//                        } else if(viewArr[i][k].getText().toString().equals(viewArr[i][k-1].getText().toString())) {
-////                            matchSound.start();
-//                            lastUpdatedScore = score;
-//                            int number = Integer.parseInt(viewArr[i][k-1].getText().toString()) * 2;
-//                            score += number;
-//                            scoreView.setText(String.valueOf(score));
-//                            viewArr[i][k].setText(String.valueOf(number));
-//                            viewArr[i][k-1].setText("");
-//                            setColor(i,k);
-//                            setColor(i,k-1);
-//                            break;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        if (!isEqual(temp)) {
-//            addRandomSquare();
-//            undoMatrix = temp;
-//        } else if (isTableFull()) {
-//            if (gameOver()) {
-//                Toast.makeText(MainActivity.this, "Game Over", Toast.LENGTH_SHORT).show();
-//            }
-//        }
     }
 
 
@@ -313,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 text.setTypeface(Typeface.DEFAULT_BOLD);
                 text.setGravity(Gravity.CENTER);
                 params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1f);
-                params.setMargins(7, 7, 7, 7);
+                params.setMargins(15, 15, 15, 15);
                 text.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.squareColor, null));
                 text.setLayoutParams(params);
                 layout.addView(text);
@@ -408,7 +308,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         }
+        showInterstitial();
         return true;
+    }
+
+    private void showInterstitial() {
+        // Show the ad if it's ready. Otherwise toast and reload the ad.
+        if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
     }
 
     private boolean isEqual(String[][] newArr) {
@@ -465,6 +373,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 score += number;
                 scoreView.setText(String.valueOf(score));
                 viewArr[values[0]][values[1]].setText(String.valueOf(number));
+                viewArr[values[0]][values[1]].startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.colition));
                 viewArr[values[0]][values[1] - 1].setText("");
                 setColor(values[0], values[1]);
                 setColor(values[0], values[1] - 1);
@@ -527,6 +436,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 score += number;
                 scoreView.setText(String.valueOf(score));
                 viewArr[values[0]][values[1]].setText(String.valueOf(number));
+                viewArr[values[0]][values[1]].startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.colition));
                 viewArr[values[0]][values[1] + 1].setText("");
                 setColor(values[0], values[1]);
                 setColor(values[0], values[1] + 1);
@@ -589,6 +499,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 score += number;
                 scoreView.setText(String.valueOf(score));
                 viewArr[values[0]][values[1]].setText(String.valueOf(number));
+                viewArr[values[0]][values[1]].startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.colition));
                 viewArr[values[0] + 1][values[1]].setText("");
                 setColor(values[0], values[1]);
                 setColor(values[0] + 1, values[1]);
@@ -651,6 +562,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 score += number;
                 scoreView.setText(String.valueOf(score));
                 viewArr[values[0]][values[1]].setText(String.valueOf(number));
+                viewArr[values[0]][values[1]].startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.colition));
                 viewArr[values[0] - 1][values[1]].setText("");
                 setColor(values[0], values[1]);
                 setColor(values[0] - 1, values[1]);
