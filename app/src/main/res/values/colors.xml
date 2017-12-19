@@ -20,4 +20,5 @@
     <color name="square512">#E3C227</color>
     <color name="square1024">#E3BA14</color>
     <color name="square2048">#ECC400</color>
+    <color name="square4096">#FFFFFF</color>
 </resources>
