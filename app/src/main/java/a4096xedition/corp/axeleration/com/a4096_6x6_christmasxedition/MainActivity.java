@@ -23,8 +23,8 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final int WINNER_NUMBER_4096 = 4096;
-    public static final int ROWS = 2;
-    public static final int COLS = 2;
+    public static final int ROWS = 4;
+    public static final int COLS = 4;
     private SquareObj[][] squareObjs;
     private ViewGroup table;
     private TextView scoreView;
@@ -279,6 +279,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         protected void onPreExecute() {
             super.onPreExecute();
             temp = getCopyMatrix(squareObjs);
+            lastUpdatedScore = score;
         }
 
         @Override
@@ -304,7 +305,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 squareObjs[values[0]][values[1]].getView().startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_right_anim));
             } else if (isExists(values[0], values[1] - 1) && squareObjs[values[0]][values[1]].getNumber() == squareObjs[values[0]][values[1] - 1].getNumber() &&
                     (!squareObjs[values[0]][values[1]].getIsCoolided() && !squareObjs[values[0]][values[1] - 1].getIsCoolided())) {
-                lastUpdatedScore = score;
                 int number = squareObjs[values[0]][values[1] - 1].getNumber() * 2;
                 score += number;
                 scoreView.setText(String.valueOf(score));
@@ -344,6 +344,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             protected void onPreExecute() {
                 super.onPreExecute();
                 temp = getCopyMatrix(squareObjs);
+                lastUpdatedScore = score;
             }
 
             @Override
@@ -368,7 +369,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     squareObjs[values[0]][values[1]].getView().startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_left_anim));
                 } else if (isExists(values[0], values[1] + 1) && squareObjs[values[0]][values[1]].getNumber() == squareObjs[values[0]][values[1] + 1].getNumber() &&
                         (!squareObjs[values[0]][values[1]].getIsCoolided() && !squareObjs[values[0]][values[1] + 1].getIsCoolided())) {
-                    lastUpdatedScore = score;
                     int number = squareObjs[values[0]][values[1] + 1].getNumber() * 2;
                     score += number;
                     scoreView.setText(String.valueOf(score));
@@ -409,6 +409,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         protected void onPreExecute() {
             super.onPreExecute();
             temp = getCopyMatrix(squareObjs);
+            lastUpdatedScore = score;
         }
 
         @Override
@@ -433,7 +434,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 squareObjs[values[0]][values[1]].getView().startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_up_anim));
             } else if (isExists(values[0] + 1, values[1]) && squareObjs[values[0]][values[1]].getNumber() == squareObjs[values[0] + 1][values[1]].getNumber() &&
                     (!squareObjs[values[0]][values[1]].getIsCoolided() && !squareObjs[values[0] + 1][values[1]].getIsCoolided())) {
-                lastUpdatedScore = score;
                 int number = squareObjs[values[0] + 1][values[1]].getNumber() * 2;
                 score += number;
                 scoreView.setText(String.valueOf(score));
@@ -474,6 +474,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         protected void onPreExecute() {
             super.onPreExecute();
             temp = getCopyMatrix(squareObjs);
+            lastUpdatedScore = score;
         }
 
         @Override
@@ -498,7 +499,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 squareObjs[values[0]][values[1]].getView().startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_down_anim));
             } else if (isExists(values[0] - 1, values[1]) && squareObjs[values[0]][values[1]].getNumber() == squareObjs[values[0] - 1][values[1]].getNumber() &&
                     (!squareObjs[values[0]][values[1]].getIsCoolided() && !squareObjs[values[0] - 1][values[1]].getIsCoolided())) {
-                lastUpdatedScore = score;
                 int number = squareObjs[values[0] - 1][values[1]].getNumber() * 2;
                 score += number;
                 scoreView.setText(String.valueOf(score));
