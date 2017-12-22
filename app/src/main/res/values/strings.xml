@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">4096 - 5x5</string>
     <string name="_2048">4096</string>
     <string name="best_text">Best</string>
     <string name="leaderboard">Leaderboard</string>

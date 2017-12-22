@@ -23,8 +23,8 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final int WINNER_NUMBER_4096 = 4096;
-    public static final int ROWS = 4;
-    public static final int COLS = 4;
+    public static final int ROWS = 5;
+    public static final int COLS = 5;
     private SquareObj[][] squareObjs;
     private ViewGroup table;
     private TextView scoreView;
